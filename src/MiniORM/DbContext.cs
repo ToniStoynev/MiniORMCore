@@ -269,13 +269,15 @@
         private IEnumerable<TEntity> LoadTableEntities<TEntity>()
             where TEntity : class
         {
-            var table = typeof(TEntity);
+            Type table = typeof(TEntity);
 
-            var columns = GetEntityColumnNames(table);
+            string[] columns = GetEntityColumnNames(table);
 
-            var tableName = GetTableName(table);
+            string tableName = GetTableName(table);
 
-            var fetchedRows = this.connection.FetchResultSet<TEntity>(tableName, columns).ToArray();
+            TEntity[] fetchedRows = this.connection
+                .FetchResultSet<TEntity>(tableName, columns)
+                .ToArray();
 
             return fetchedRows;
         }
